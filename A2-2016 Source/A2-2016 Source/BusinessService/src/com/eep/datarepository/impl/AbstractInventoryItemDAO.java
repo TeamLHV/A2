@@ -22,12 +22,10 @@ import java.util.logging.Logger;
  * @author zhongzhu
  * @param <DTO> : can be TreeDTO, ShrubDTO, and etc.
  */
-public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
-
-    private static final String PASSWORD = "remote_pass";
-    private static final String USER_NAME = "remote";
+public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
 
     private Connection DBConn = null;
+
     private final Class c;
     private final String database;
     private final String table;
@@ -38,7 +36,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
      * @param database database name
      * @param table table name
      */
-    protected AbstractDAO(Class c, String database, String table) {
+    protected AbstractInventoryItemDAO(Class c, String database, String table) {
         this.c = c;
         this.database = database;
         this.table = table;
@@ -56,7 +54,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
                 result.add(temp);
             }
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -74,7 +72,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
                 constructInventoryItem(dto, rs);
             }
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -90,7 +88,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
                     + dto.getQuantity() + ", " + dto.getPrice() + ");";
             s.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -102,7 +100,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
             String sql = "DELETE FROM " + table + " WHERE product_code = '" + productCode + "';";
             s.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -111,7 +109,7 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
     protected void update(DTO dto) {
         try {
             String sql = "UPDATE " + table + " set description=?, quantity=?, price=? where product_code=?";
-            DBConn = DriverManager.getConnection(getConnString(), USER_NAME, PASSWORD);
+            DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
             PreparedStatement s = DBConn.prepareStatement(sql);
             s.setString(1, dto.getDescription());
             s.setInt(2, dto.getQuantity());
@@ -119,28 +117,28 @@ public abstract class AbstractDAO<DTO extends InventoryItemDTO> {
             s.setString(4, dto.getProductCode());
             s.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
     }
 
-    private Statement createStatement() throws SQLException {
-        DBConn = DriverManager.getConnection(getConnString(), USER_NAME, PASSWORD);
-        Statement s = DBConn.createStatement();
-        return s;
-    }
-
     private String getConnString() {
-        return "jdbc:mysql://localhost:3306/" + database;
+        return "jdbc:mysql://" + Constants.DB_IP + ":" + Constants.DB_PORT + "/" + database;
     }
 
     private void closeConn() {
         try {
             DBConn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private Statement createStatement() throws SQLException {
+        DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
+        Statement s = DBConn.createStatement();
+        return s;
     }
 
     private void constructInventoryItem(InventoryItemDTO dto, ResultSet rs) throws SQLException {

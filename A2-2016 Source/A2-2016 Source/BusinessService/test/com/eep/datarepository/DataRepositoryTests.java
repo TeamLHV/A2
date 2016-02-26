@@ -5,7 +5,9 @@
  */
 package com.eep.datarepository;
 
+import com.eep.datarepository.dto.OrderDTO;
 import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.impl.OrdersDAO;
 import com.eep.datarepository.impl.TreesDAO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -43,7 +45,7 @@ public class DataRepositoryTests {
     @Test
     public void testTreeQuery() {
         final TreesDAO treeDAO = new TreesDAO();
-        
+
         TreeDTO dto = new TreeDTO();
         dto.setProductCode("EF002");
         dto.setDescription("Hello");
@@ -67,6 +69,47 @@ public class DataRepositoryTests {
 
         treeDAO.deleteTreeByProductCode("EF002");
         query = treeDAO.queryTreesByProductCode("EF002");
+        assertNull(query);
+    }
+
+    @Test
+    public void testOrders() {
+        OrdersDAO ordersDAO = new OrdersDAO();
+        OrderDTO newOrder = new OrderDTO();
+        newOrder.setOrderDate("02/26/2016 5:5:45");
+        newOrder.setFirstName("Zhong");
+        newOrder.setLastName("Zhu");
+        newOrder.setAddress("2715 Murray");
+        newOrder.setPhone("4129615668");
+        newOrder.setTotalCost(500.0);
+        newOrder.setShipped(false);
+        newOrder.setOrderTable("order2340197999");
+        ordersDAO.insertOrder(newOrder);
+
+        OrderDTO query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
+        assertEquals(query.getOrderDate(), newOrder.getOrderDate());
+        assertEquals(query.getFirstName(), newOrder.getFirstName());
+        assertEquals(query.getLastName(), newOrder.getLastName());
+        assertEquals(query.getAddress(), newOrder.getAddress());
+        assertEquals(query.getPhone(), newOrder.getPhone());
+        assertEquals(query.getTotalCost(), newOrder.getTotalCost(), 0.01);
+        assertEquals(query.getShipped(), newOrder.getShipped());
+        assertEquals(query.getOrderTable(), newOrder.getOrderTable());
+
+        query.setShipped(true);
+        ordersDAO.updateOrder(query);
+        query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
+        assertEquals(query.getOrderDate(), newOrder.getOrderDate());
+        assertEquals(query.getFirstName(), newOrder.getFirstName());
+        assertEquals(query.getLastName(), newOrder.getLastName());
+        assertEquals(query.getAddress(), newOrder.getAddress());
+        assertEquals(query.getPhone(), newOrder.getPhone());
+        assertEquals(query.getTotalCost(), newOrder.getTotalCost(), 0.01);
+        assertEquals(query.getShipped(), true);
+        assertEquals(query.getOrderTable(), newOrder.getOrderTable());
+
+        ordersDAO.deleteOrderByID(newOrder.getOrderID());
+        query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
         assertNull(query);
     }
 }

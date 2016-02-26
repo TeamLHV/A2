@@ -13,10 +13,10 @@ import com.eep.datarepository.ITreesDAO;
  *
  * @author zhongzhu
  */
-public class TreesDAO extends AbstractDAO<TreeDTO> implements ITreesDAO {
+public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreesDAO {
 
     public TreesDAO() {
-        super(TreeDTO.class, "inventory", "trees");
+        super(TreeDTO.class, Constants.INVENTORY_DATABASE, Constants.TREE_TABLE);
     }
 
     @Override
