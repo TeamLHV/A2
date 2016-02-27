@@ -1,7 +1,7 @@
 
 import com.eep.businessservice.IInventoryService;
 import com.eep.businessservice.IOrderService;
-import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderItemInfo;
 import com.eep.businessservice.dto.OrderInfo;
 import com.eep.businessservice.exception.CreateTableException;
 import com.eep.businessservice.exception.DropTableException;
@@ -321,7 +321,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // Database parameters
         String errString;            // String for displaying errors
         String msgString;            // String for displaying non-error messages
-        List<InventoryItemInfo> results;
+        List<OrderItemInfo> results;
 
         msgString = ">> Establishing Driver...";
         jTextArea1.setText("\n" + msgString);
@@ -347,7 +347,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             jTextArea1.setText("");
 
-            for (InventoryItemInfo itemInfo : results) {
+            for (OrderItemInfo itemInfo : results) {
                 msgString = itemInfo.getProductCode() + " : " + itemInfo.getDescription()
                         + " : $" + itemInfo.getPrice() + " : " + itemInfo.getQuantity()
                         + " units in stock";
@@ -536,7 +536,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         sPerUnitCost = orderItem.substring(beginIndex, orderItem.length());
                         perUnitCost = Float.parseFloat(sPerUnitCost);
 
-                        InventoryItemInfo item = new InventoryItemInfo();
+                        OrderItemInfo item = new OrderItemInfo();
                         item.setProductCode(productID);
                         item.setDescription(description);
                         item.setPrice((double) perUnitCost);
@@ -599,7 +599,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         String errString;            // String for displaying errors
         String msgString;            // String for displaying non-error messages
-        List<InventoryItemInfo> results;
+        List<OrderItemInfo> results;
 
         // Connect to the inventory database
         msgString = ">> Establishing Driver...";
@@ -623,7 +623,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             jTextArea1.setText("");
 
-            for (InventoryItemInfo itemInfo : results) {
+            for (OrderItemInfo itemInfo : results) {
                 msgString = itemInfo.getProductCode() + " : " + itemInfo.getDescription()
                         + " : $" + itemInfo.getPrice() + " : " + itemInfo.getQuantity()
                         + " units in stock";
@@ -647,7 +647,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         String errString;            // String for displaying errors
         String msgString;            // String for displaying non-error messages
-        List<InventoryItemInfo> results;
+        List<OrderItemInfo> results;
 
         // Connect to the inventory database
         msgString = ">> Establishing Driver...";
@@ -674,7 +674,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             jTextArea1.setText("");
 
-            for (InventoryItemInfo itemInfo : results) {
+            for (OrderItemInfo itemInfo : results) {
                 msgString = itemInfo.getProductCode() + " : " + itemInfo.getDescription()
                         + " : $" + itemInfo.getPrice() + " : " + itemInfo.getQuantity()
                         + " units in stock";

@@ -1,6 +1,6 @@
 
 import com.eep.businessservice.IInventoryService;
-import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderItemInfo;
 import com.eep.businessservice.factory.ServiceFactory;
 import com.eep.configuration.DBServer;
 import java.util.List;
@@ -347,7 +347,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                 quantity = Integer.parseInt(jTextField4.getText());
                 perUnitCost = Float.parseFloat(jTextField3.getText());
 
-                InventoryItemInfo info = new InventoryItemInfo();
+                OrderItemInfo info = new OrderItemInfo();
                 info.setProductCode(productID);
                 info.setDescription(description);
                 info.setQuantity(quantity);
@@ -398,7 +398,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         String errString;        // String for displaying errors
         Boolean fieldError = true;      // Error flag
         String msgString;        // String for displaying non-error messages
-        List<InventoryItemInfo> queryResult = null;
+        List<OrderItemInfo> queryResult = null;
         String tableSelected = null;    // String used to determine which data table to use
         java.sql.Statement s = null;    // SQL statement pointer
 
@@ -460,7 +460,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
                 // Now we list the inventory for the selected table
                 jTextArea1.setText("");
-                for (InventoryItemInfo itemInfo : queryResult) {
+                for (OrderItemInfo itemInfo : queryResult) {
                     msgString = tableSelected + ">>" + itemInfo.getProductCode() + "::" + itemInfo.getDescription()
                             + " :: " + itemInfo.getPrice() + "::" + itemInfo.getQuantity();
                     jTextArea1.append("\n" + msgString);
@@ -578,7 +578,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         String tableSelected = null;        // String used to determine which data table to use
         String inventorySelection;   // Inventory text string selected by user
         IndexNotFound = false;              // Flag indicating that a string index was not found
-        InventoryItemInfo itemInfo = null;
+        OrderItemInfo itemInfo = null;
 
         // this is the selected line of text
         inventorySelection = jTextArea1.getSelectedText();

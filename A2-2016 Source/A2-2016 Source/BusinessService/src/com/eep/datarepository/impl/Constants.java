@@ -24,6 +24,8 @@ public class Constants {
     public static final String TABLE_SEED = "seeds";
     public static final String TABLE_SHRUB = "shrubs";
     public static final String TABLE_TREE = "trees";
+    
+    public static final String DATABASE_LEAFTECH = "leaftech";
     public static final String TABLE_CULTUREBOX = "cultureboxes";
     public static final String TABLE_GENOMIC = "genomics";
     public static final String TABLE_PROCESSING = "processing";

@@ -5,8 +5,9 @@
  */
 package com.eep.businessservice;
 
-import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderItemInfo;
 import com.eep.businessservice.dto.OrderInfo;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,14 @@ public interface IOrderService {
 
     void createNewOrder(OrderInfo orderInfo);
 
-    void addItemToOrder(OrderInfo orderInfo, InventoryItemInfo item);
+    void addItemToOrder(OrderInfo orderInfo, OrderItemInfo item);
+
+    List<OrderInfo> getAllOrders();
+
+    OrderInfo getOrderByID(Long orderID);
+
+    List<OrderItemInfo> getAllItems(OrderInfo orderInfo);
+    
+    void shipOrder(OrderInfo orderInfo);
 
 }

@@ -9,12 +9,13 @@ package com.eep.businessservice.dto;
  *
  * @author zhongzhu
  */
-public class InventoryItemInfo {
+public class OrderItemInfo {
 
     private String productCode;
     private String description;
     private Integer quantity;
     private Double price;
+    private Long itemID;
 
     public String getProductCode() {
         return productCode;
@@ -46,6 +47,14 @@ public class InventoryItemInfo {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Long getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(Long itemID) {
+        this.itemID = itemID;
     }
 
     @Override

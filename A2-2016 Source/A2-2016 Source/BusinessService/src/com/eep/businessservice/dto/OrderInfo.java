@@ -19,6 +19,7 @@ public class OrderInfo {
     private String phone;
     private Double totalCost;
     private String orderTableName;
+    private Boolean shipped;
 
     public Long getOrderID() {
         return orderID;
@@ -82,6 +83,14 @@ public class OrderInfo {
 
     public void setOrderTableName(String orderTableName) {
         this.orderTableName = orderTableName;
+    }
+
+    public Boolean getShipped() {
+        return shipped;
+    }
+
+    public void setShipped(Boolean shipped) {
+        this.shipped = shipped;
     }
 
 }

@@ -6,7 +6,7 @@
 package com.eep.businessservice.impl;
 
 import com.eep.businessservice.IInventoryService;
-import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderItemInfo;
 import com.eep.datarepository.ICultureBoxDAO;
 import com.eep.datarepository.IGenomicDAO;
 import com.eep.datarepository.IProcessingDAO;
@@ -53,11 +53,11 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public void addTree(InventoryItemInfo info) {
+    public void addTree(OrderItemInfo info) {
         treeDAO.insert(convertToTree(info));
     }
 
-    private TreeDTO convertToTree(InventoryItemInfo info) {
+    private TreeDTO convertToTree(OrderItemInfo info) {
         TreeDTO dto = new TreeDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
@@ -67,11 +67,11 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public void addShrub(InventoryItemInfo info) {
+    public void addShrub(OrderItemInfo info) {
         shrubDAO.insert(convertToShrub(info));
     }
 
-    private ShrubDTO convertToShrub(InventoryItemInfo info) {
+    private ShrubDTO convertToShrub(OrderItemInfo info) {
         ShrubDTO dto = new ShrubDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
@@ -81,11 +81,11 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public void addSeed(InventoryItemInfo info) {
+    public void addSeed(OrderItemInfo info) {
         seedDAO.insert(convertToSeed(info));
     }
 
-    private SeedDTO convertToSeed(InventoryItemInfo info) {
+    private SeedDTO convertToSeed(OrderItemInfo info) {
         SeedDTO dto = new SeedDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
@@ -95,9 +95,9 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public List<InventoryItemInfo> getAllTrees() {
+    public List<OrderItemInfo> getAllTrees() {
         List<TreeDTO> l = treeDAO.queryAll();
-        List<InventoryItemInfo> result = new ArrayList<>();
+        List<OrderItemInfo> result = new ArrayList<>();
         l.stream().forEach((t) -> {
             result.add(convertToInventoryItemInfo(t));
         });
@@ -105,9 +105,9 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public List<InventoryItemInfo> getAllShrubs() {
+    public List<OrderItemInfo> getAllShrubs() {
         List<ShrubDTO> l = shrubDAO.queryAll();
-        List<InventoryItemInfo> result = new ArrayList<>();
+        List<OrderItemInfo> result = new ArrayList<>();
         l.stream().forEach((t) -> {
             result.add(convertToInventoryItemInfo(t));
         });
@@ -115,17 +115,17 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public List<InventoryItemInfo> getAllSeeds() {
+    public List<OrderItemInfo> getAllSeeds() {
         List<SeedDTO> l = seedDAO.queryAll();
-        List<InventoryItemInfo> result = new ArrayList<>();
+        List<OrderItemInfo> result = new ArrayList<>();
         l.stream().forEach((t) -> {
             result.add(convertToInventoryItemInfo(t));
         });
         return result;
     }
 
-    private InventoryItemInfo convertToInventoryItemInfo(InventoryItemDTO t) {
-        InventoryItemInfo temp = new InventoryItemInfo();
+    private OrderItemInfo convertToInventoryItemInfo(InventoryItemDTO t) {
+        OrderItemInfo temp = new OrderItemInfo();
         temp.setDescription(t.getDescription());
         temp.setPrice(t.getPrice());
         temp.setProductCode(t.getProductCode());
@@ -149,7 +149,7 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public InventoryItemInfo decrementTree(String productCode) {
+    public OrderItemInfo decrementTree(String productCode) {
         TreeDTO dto = treeDAO.queryByProductCode(productCode);
         dto.setQuantity(dto.getQuantity() - 1);
         treeDAO.update(dto);
@@ -157,7 +157,7 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public InventoryItemInfo decrementShrub(String productCode) {
+    public OrderItemInfo decrementShrub(String productCode) {
         ShrubDTO dto = shrubDAO.queryByProductCode(productCode);
         dto.setQuantity(dto.getQuantity() - 1);
         shrubDAO.update(dto);
@@ -165,7 +165,7 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public InventoryItemInfo decrementSeed(String productCode) {
+    public OrderItemInfo decrementSeed(String productCode) {
         SeedDTO dto = seedDAO.queryByProductCode(productCode);
         dto.setQuantity(dto.getQuantity() - 1);
         seedDAO.update(dto);

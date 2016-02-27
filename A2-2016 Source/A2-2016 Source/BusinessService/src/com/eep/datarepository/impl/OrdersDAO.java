@@ -39,7 +39,7 @@ public class OrdersDAO implements IOrdersDAO {
                 result.add(dto);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -48,7 +48,7 @@ public class OrdersDAO implements IOrdersDAO {
     }
 
     @Override
-    public OrderDTO queryOrdersByOrderID(Long orderID) {
+    public OrderDTO queryOrderByOrderID(Long orderID) {
         OrderDTO dto = null;
         try {
             Statement s = createStatement();
@@ -57,7 +57,7 @@ public class OrdersDAO implements IOrdersDAO {
                 dto = constructOrder(rs);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -85,7 +85,7 @@ public class OrdersDAO implements IOrdersDAO {
                 throw new SQLException("Creating order failed, no ID obtained.");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -97,7 +97,7 @@ public class OrdersDAO implements IOrdersDAO {
             Statement s = createStatement();
             s.executeUpdate(SQLstatement);
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -200,6 +200,30 @@ public class OrdersDAO implements IOrdersDAO {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex.getMessage());
         }
+    }
+
+    @Override
+    public List<OrderTableItemDTO> queryAllOrderItems(String orderTableName) {
+        List<OrderTableItemDTO> result = new ArrayList<>();
+        OrderTableItemDTO dto;
+        try {
+            Statement s = createStatement();
+            ResultSet rs = s.executeQuery("select * from " + orderTableName);
+            while (rs.next()) {
+                dto = new OrderTableItemDTO();
+                dto.setID(rs.getLong(1));
+                dto.setProductCode(rs.getString(2));
+                dto.setDescription(rs.getString(3));
+                dto.setPrice(rs.getDouble(4));
+                result.add(dto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConn();
+        }
+
+        return result;
     }
 
 }

@@ -86,7 +86,7 @@ public class DataRepositoryTests {
         newOrder.setOrderTable("order2340197999");
         ordersDAO.insertOrder(newOrder);
 
-        OrderDTO query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
+        OrderDTO query = ordersDAO.queryOrderByOrderID(newOrder.getOrderID());
         assertEquals(query.getOrderDate(), newOrder.getOrderDate());
         assertEquals(query.getFirstName(), newOrder.getFirstName());
         assertEquals(query.getLastName(), newOrder.getLastName());
@@ -98,7 +98,7 @@ public class DataRepositoryTests {
 
         query.setShipped(true);
         ordersDAO.updateOrder(query);
-        query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
+        query = ordersDAO.queryOrderByOrderID(newOrder.getOrderID());
         assertEquals(query.getOrderDate(), newOrder.getOrderDate());
         assertEquals(query.getFirstName(), newOrder.getFirstName());
         assertEquals(query.getLastName(), newOrder.getLastName());
@@ -109,7 +109,7 @@ public class DataRepositoryTests {
         assertEquals(query.getOrderTable(), newOrder.getOrderTable());
 
         ordersDAO.deleteOrderByID(newOrder.getOrderID());
-        query = ordersDAO.queryOrdersByOrderID(newOrder.getOrderID());
+        query = ordersDAO.queryOrderByOrderID(newOrder.getOrderID());
         assertNull(query);
     }
 }

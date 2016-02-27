@@ -5,7 +5,7 @@
  */
 package com.eep.businessservice;
 
-import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderItemInfo;
 import java.util.List;
 
 /**
@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface IInventoryService {
 
-    void addTree(InventoryItemInfo info);
+    void addTree(OrderItemInfo info);
 
-    void addShrub(InventoryItemInfo info);
+    void addShrub(OrderItemInfo info);
 
-    void addSeed(InventoryItemInfo info);
+    void addSeed(OrderItemInfo info);
 
     void deleteTree(String productCode);
 
@@ -26,15 +26,15 @@ public interface IInventoryService {
 
     void deleteSeed(String productCode);
 
-    InventoryItemInfo decrementTree(String productCode);
+    OrderItemInfo decrementTree(String productCode);
 
-    InventoryItemInfo decrementShrub(String productCode);
+    OrderItemInfo decrementShrub(String productCode);
 
-    InventoryItemInfo decrementSeed(String productCode);
+    OrderItemInfo decrementSeed(String productCode);
 
-    List<InventoryItemInfo> getAllTrees();
+    List<OrderItemInfo> getAllTrees();
 
-    List<InventoryItemInfo> getAllShrubs();
+    List<OrderItemInfo> getAllShrubs();
 
-    List<InventoryItemInfo> getAllSeeds();
+    List<OrderItemInfo> getAllSeeds();
 }

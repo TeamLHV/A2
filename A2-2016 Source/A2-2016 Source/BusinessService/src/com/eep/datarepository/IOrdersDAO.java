@@ -21,9 +21,11 @@ public interface IOrdersDAO {
 
     void insertIntoOrderTable(String orderTableName, OrderTableItemDTO item);
 
+    List<OrderTableItemDTO> queryAllOrderItems(String orderTableName);
+
     List<OrderDTO> queryAllOrders();
 
-    OrderDTO queryOrdersByOrderID(Long orderID);
+    OrderDTO queryOrderByOrderID(Long orderID);
 
     void insertOrder(OrderDTO order);
 
