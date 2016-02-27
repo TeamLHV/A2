@@ -14,9 +14,12 @@ import com.eep.datarepository.IReferenceMaterialDAO;
 import com.eep.datarepository.ISeedDAO;
 import com.eep.datarepository.IShrubDAO;
 import com.eep.datarepository.ITreeDAO;
+import com.eep.datarepository.dto.InventoryItemDTO;
 import com.eep.datarepository.dto.SeedDTO;
 import com.eep.datarepository.dto.ShrubDTO;
 import com.eep.datarepository.dto.TreeDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -51,32 +54,82 @@ public class InventoryService implements IInventoryService {
 
     @Override
     public void addTree(InventoryItemInfo info) {
+        treeDAO.insert(convertToTree(info));
+    }
+
+    private TreeDTO convertToTree(InventoryItemInfo info) {
         TreeDTO dto = new TreeDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
         dto.setProductCode(info.getProductCode());
         dto.setQuantity(info.getQuantity());
-        treeDAO.insert(dto);
+        return dto;
     }
 
     @Override
     public void addShrub(InventoryItemInfo info) {
+        shrubDAO.insert(convertToShrub(info));
+    }
+
+    private ShrubDTO convertToShrub(InventoryItemInfo info) {
         ShrubDTO dto = new ShrubDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
         dto.setProductCode(info.getProductCode());
         dto.setQuantity(info.getQuantity());
-        shrubDAO.insert(dto);
+        return dto;
     }
 
     @Override
     public void addSeed(InventoryItemInfo info) {
+        seedDAO.insert(convertToSeed(info));
+    }
+
+    private SeedDTO convertToSeed(InventoryItemInfo info) {
         SeedDTO dto = new SeedDTO();
         dto.setDescription(info.getDescription());
         dto.setPrice(info.getPrice());
         dto.setProductCode(info.getProductCode());
         dto.setQuantity(info.getQuantity());
-        seedDAO.insert(dto);
+        return dto;
     }
 
+    @Override
+    public List<InventoryItemInfo> getAllTrees() {
+        List<TreeDTO> l = treeDAO.queryAll();
+        List<InventoryItemInfo> result = new ArrayList<>();
+        l.stream().forEach((t) -> {
+            result.add(convertToInventoryItemInfo(t));
+        });
+        return result;
+    }
+
+    @Override
+    public List<InventoryItemInfo> getAllShrubs() {
+        List<ShrubDTO> l = shrubDAO.queryAll();
+        List<InventoryItemInfo> result = new ArrayList<>();
+        l.stream().forEach((t) -> {
+            result.add(convertToInventoryItemInfo(t));
+        });
+        return result;
+    }
+
+    @Override
+    public List<InventoryItemInfo> getAllSeeds() {
+        List<SeedDTO> l = seedDAO.queryAll();
+        List<InventoryItemInfo> result = new ArrayList<>();
+        l.stream().forEach((t) -> {
+            result.add(convertToInventoryItemInfo(t));
+        });
+        return result;
+    }
+
+    private InventoryItemInfo convertToInventoryItemInfo(InventoryItemDTO t) {
+        InventoryItemInfo temp = new InventoryItemInfo();
+        temp.setDescription(t.getDescription());
+        temp.setPrice(t.getPrice());
+        temp.setProductCode(t.getProductCode());
+        temp.setQuantity(t.getQuantity());
+        return temp;
+    }
 }

@@ -6,6 +6,7 @@
 package com.eep.businessservice;
 
 import com.eep.businessservice.dto.InventoryItemInfo;
+import java.util.List;
 
 /**
  *
@@ -19,4 +20,9 @@ public interface IInventoryService {
 
     void addSeed(InventoryItemInfo info);
 
+    List<InventoryItemInfo> getAllTrees();
+
+    List<InventoryItemInfo> getAllShrubs();
+
+    List<InventoryItemInfo> getAllSeeds();
 }
