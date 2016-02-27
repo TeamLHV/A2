@@ -1,4 +1,8 @@
 
+import com.eep.businessservice.IInventoryService;
+import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.factory.ServiceFactory;
+import com.eep.configuration.DBServer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,6 +33,7 @@ import java.sql.ResultSet;
 public class InventoryMainFrame extends javax.swing.JFrame {
 
        String versionID = "v2.10.10";
+       private IInventoryService service = ServiceFactory.createInventoryService();
 
     /** Creates new form AddInventoryMainFrame */
     public InventoryMainFrame() {
@@ -284,20 +289,15 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         // Adds inventory to database
 
         Boolean connectError = false;   // Error flag
-        Connection DBConn = null;       // MySQL connection handle
         String description;             // Tree, seed, or shrub description
-        Boolean executeError = false;   // Error flag
-        String errString = null;        // String for displaying errors
-        int executeUpdateVal;           // Return value from execute indicating effected rows
+        String errString;        // String for displaying errors
         Boolean fieldError = false;     // Error flag
-        String msgString = null;        // String for displaying non-error messages
-        ResultSet res = null;           // SQL query result set pointer
+        String msgString;        // String for displaying non-error messages
         String tableSelected = null;    // String used to determine which data table to use
         Integer quantity;               // Quantity of trees, seeds, or shrubs
         Float perUnitCost;              // Cost per tree, seed, or shrub unit
-        String productID = null;        // Product id of tree, seed, or shrub
+        String productID;        // Product id of tree, seed, or shrub
         java.sql.Statement s = null;    // SQL statement pointer
-        String SQLstatement = null;     // String for building SQL queries
         
         // Check to make sure a radio button is selected
        
@@ -361,13 +361,10 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
                 //define the data source
                 String SQLServerIP = jTextField1.getText();
-                String sourceURL = "jdbc:mysql://" + SQLServerIP + ":3306/inventory";
+                DBServer.ipAddress = SQLServerIP;
 
-                msgString = ">> Establishing connection with: " + sourceURL + "...";
+                msgString = ">> Establishing connection with: " + SQLServerIP + "...";
                 jTextArea1.append("\n"+msgString);
-
-                //create a connection to the db
-                DBConn = DriverManager.getConnection(sourceURL,"remote","remote_pass");
 
             } catch (Exception e) {
 
@@ -391,50 +388,35 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                 quantity = Integer.parseInt(jTextField4.getText());
                 perUnitCost = Float.parseFloat(jTextField3.getText());
 
-                // create an SQL statement variable and create the INSERT
-                // query to insert the new inventory into the database
-
-                s = DBConn.createStatement();
-
+                
+                InventoryItemInfo info = new InventoryItemInfo();
+                info.setProductCode(productID);
+                info.setDescription(description);
+                info.setQuantity(quantity);
+                info.setPrice((double)perUnitCost);
                 // if trees are selected then insert inventory into trees
                 // table
                 if (jRadioButton1.isSelected())
                 {
-                    SQLstatement = ( "INSERT INTO trees (product_code, " +
-                            "description, quantity, price) VALUES ( '" +
-                            productID + "', " + "'" + description + "', " +
-                            quantity + ", " + perUnitCost + ");");
-                    
                     tableSelected = "TREES";
-
+                    service.addTree(info);
                 }
 
                 // if shrubs are selected then insert inventory into strubs
                 // table
                 if (jRadioButton2.isSelected())
                 {
-                    SQLstatement = ( "INSERT INTO shrubs (product_code, " +
-                            "description, quantity, price) VALUES ( '" +
-                            productID + "', " + "'" + description + "', " +
-                            quantity + ", " + perUnitCost + ");");
-                    
                     tableSelected = "SHRUBS";
+                    service.addShrub(info);
                 }
 
                 // if seeds are selected then insert inventory into seeds
                 // table
                 if (jRadioButton3.isSelected())
                 {
-                    SQLstatement = ( "INSERT INTO seeds (product_code, " +
-                            "description, quantity, price) VALUES ( '" +
-                            productID + "', " + "'" + description + "', " +
-                            quantity + ", " + perUnitCost + ");");
-                    
                     tableSelected = "SEEDS";
+                    service.addSeed(info);
                 }
-
-                // execute the update
-                executeUpdateVal = s.executeUpdate(SQLstatement);
 
                 // let the user know all went well
 
@@ -448,8 +430,6 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
                 errString =  "\nProblem adding inventory:: " + e;
                 jTextArea1.append(errString);
-                executeError = true;
-
             } // try
 
         } //execute SQL check
@@ -462,13 +442,12 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
         Boolean connectError = false;   // Error flag
         Connection DBConn = null;       // MySQL connection handle
-        Boolean executeError = false;   // Error flag
-        String errString = null;        // String for displaying errors
+        String errString;        // String for displaying errors
         Boolean fieldError = true;      // Error flag
-        String msgString = null;        // String for displaying non-error messages
+        String msgString;        // String for displaying non-error messages
         ResultSet res = null;           // SQL query result set pointer
         String tableSelected = null;    // String used to determine which data table to use
-        java.sql.Statement s = null;    // SQL statement pointer
+        java.sql.Statement s;    // SQL statement pointer
 
         // Check to make sure a radio button is selected
         if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected())
@@ -570,8 +549,6 @@ public class InventoryMainFrame extends javax.swing.JFrame {
 
                 errString =  "\nProblem with " + tableSelected +" query:: " + e;
                 jTextArea1.append(errString);
-                executeError = true;
-
             } // try
         }
     }//GEN-LAST:event_jButton2ActionPerformed

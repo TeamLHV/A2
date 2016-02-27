@@ -17,10 +17,16 @@ public class Constants {
     public static final String DB_IP = "localhost";
     public static final Integer DB_PORT = 3306;
 
-    public static final String ORDER_DATABASE = "orderinfo";
-    public static final String ORDER_TABLE = "orders";
+    public static final String DATABASE_ORDER = "orderinfo";
+    public static final String TABLE_ORDER = "orders";
 
-    public static final String INVENTORY_DATABASE = "inventory";
-    public static final String TREE_TABLE = "trees";
+    public static final String DATABASE_INVENTORY = "inventory";
+    public static final String TABLE_SEED = "seeds";
+    public static final String TABLE_SHRUB = "shrubs";
+    public static final String TABLE_TREE = "trees";
+    public static final String TABLE_CULTUREBOX = "cultureboxes";
+    public static final String TABLE_GENOMIC = "genomics";
+    public static final String TABLE_PROCESSING = "processing";
+    public static final String TABLE_REFERENCE_MATERIAL = "referencematerials";
 
 }

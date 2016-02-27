@@ -5,27 +5,27 @@
  */
 package com.eep.datarepository.impl;
 
-import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.dto.ShrubDTO;
 import java.util.List;
-import com.eep.datarepository.ITreeDAO;
+import com.eep.datarepository.IShrubDAO;
 
 /**
  *
  * @author zhongzhu
  */
-public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreeDAO {
+public class ShrubDAO extends AbstractInventoryItemDAO<ShrubDTO> implements IShrubDAO {
 
-    public TreesDAO() {
-        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE);
+    public ShrubDAO() {
+        super(ShrubDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SHRUB);
     }
 
     @Override
-    public List<TreeDTO> queryAll() {
+    public List<ShrubDTO> queryAll() {
         return super.queryAll();
     }
 
     @Override
-    public TreeDTO queryByProductCode(String productCode) {
+    public ShrubDTO queryByProductCode(String productCode) {
         return super.queryByCode(productCode);
     }
 
@@ -35,13 +35,13 @@ public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITree
     }
 
     @Override
-    public void insert(TreeDTO tree) {
-        super.insert(tree);
+    public void insert(ShrubDTO s) {
+        super.insert(s);
     }
 
     @Override
-    public void update(TreeDTO tree) {
-        super.update(tree);
+    public void update(ShrubDTO s) {
+        super.update(s);
     }
 
 }

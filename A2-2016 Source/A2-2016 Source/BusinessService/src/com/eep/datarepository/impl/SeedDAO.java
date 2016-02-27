@@ -5,27 +5,27 @@
  */
 package com.eep.datarepository.impl;
 
-import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.dto.SeedDTO;
 import java.util.List;
-import com.eep.datarepository.ITreeDAO;
+import com.eep.datarepository.ISeedDAO;
 
 /**
  *
  * @author zhongzhu
  */
-public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreeDAO {
+public class SeedDAO extends AbstractInventoryItemDAO<SeedDTO> implements ISeedDAO {
 
-    public TreesDAO() {
-        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE);
+    public SeedDAO() {
+        super(SeedDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SEED);
     }
 
     @Override
-    public List<TreeDTO> queryAll() {
+    public List<SeedDTO> queryAll() {
         return super.queryAll();
     }
 
     @Override
-    public TreeDTO queryByProductCode(String productCode) {
+    public SeedDTO queryByProductCode(String productCode) {
         return super.queryByCode(productCode);
     }
 
@@ -35,13 +35,13 @@ public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITree
     }
 
     @Override
-    public void insert(TreeDTO tree) {
-        super.insert(tree);
+    public void insert(SeedDTO s) {
+        super.insert(s);
     }
 
     @Override
-    public void update(TreeDTO tree) {
-        super.update(tree);
+    public void update(SeedDTO s) {
+        super.update(s);
     }
 
 }

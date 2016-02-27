@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author zhongzhu
  */
-public interface ITreesDAO {
+public interface ITreeDAO {
 
-    List<TreeDTO> queryAllTrees();
+    List<TreeDTO> queryAll();
 
-    TreeDTO queryTreesByProductCode(String productCode);
+    TreeDTO queryByProductCode(String productCode);
 
-    void deleteTreeByProductCode(String produceCode);
+    void deleteByProductCode(String produceCode);
 
-    void insertTree(TreeDTO tree);
+    void insert(TreeDTO tree);
 
-    void updateTree(TreeDTO tree);
+    void update(TreeDTO tree);
 }

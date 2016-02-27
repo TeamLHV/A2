@@ -9,6 +9,6 @@ package com.eep.datarepository.dto;
  *
  * @author zhongzhu
  */
-public class SeedsDTO extends InventoryItemDTO{
+public class SeedDTO extends InventoryItemDTO{
     
 }

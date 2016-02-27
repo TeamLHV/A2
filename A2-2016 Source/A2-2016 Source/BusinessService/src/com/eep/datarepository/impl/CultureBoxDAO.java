@@ -5,27 +5,27 @@
  */
 package com.eep.datarepository.impl;
 
-import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.ICultureBoxDAO;
 import java.util.List;
-import com.eep.datarepository.ITreeDAO;
+import com.eep.datarepository.dto.CultureBoxDTO;
 
 /**
  *
  * @author zhongzhu
  */
-public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreeDAO {
+public class CultureBoxDAO extends AbstractInventoryItemDAO<CultureBoxDTO> implements ICultureBoxDAO {
 
-    public TreesDAO() {
-        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE);
+    public CultureBoxDAO() {
+        super(CultureBoxDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_CULTUREBOX);
     }
 
     @Override
-    public List<TreeDTO> queryAll() {
+    public List<CultureBoxDTO> queryAll() {
         return super.queryAll();
     }
 
     @Override
-    public TreeDTO queryByProductCode(String productCode) {
+    public CultureBoxDTO queryByProductCode(String productCode) {
         return super.queryByCode(productCode);
     }
 
@@ -35,13 +35,13 @@ public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITree
     }
 
     @Override
-    public void insert(TreeDTO tree) {
-        super.insert(tree);
+    public void insert(CultureBoxDTO s) {
+        super.insert(s);
     }
 
     @Override
-    public void update(TreeDTO tree) {
-        super.update(tree);
+    public void update(CultureBoxDTO s) {
+        super.update(s);
     }
 
 }

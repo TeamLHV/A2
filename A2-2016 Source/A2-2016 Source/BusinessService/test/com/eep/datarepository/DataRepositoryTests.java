@@ -51,24 +51,24 @@ public class DataRepositoryTests {
         dto.setDescription("Hello");
         dto.setQuantity(10);
         dto.setPrice(10.5);
-        treeDAO.insertTree(dto);
+        treeDAO.insert(dto);
 
-        TreeDTO query = treeDAO.queryTreesByProductCode("EF002");
+        TreeDTO query = treeDAO.queryByProductCode("EF002");
         assertEquals(query.getProductCode(), "EF002");
         assertEquals(query.getDescription(), "Hello");
         assertEquals((int) query.getQuantity(), 10);
         assertEquals((double) query.getPrice(), 10.5, 0.1);
 
         dto.setQuantity(9);
-        treeDAO.updateTree(dto);
-        query = treeDAO.queryTreesByProductCode("EF002");
+        treeDAO.update(dto);
+        query = treeDAO.queryByProductCode("EF002");
         assertEquals(query.getProductCode(), "EF002");
         assertEquals(query.getDescription(), "Hello");
         assertEquals((int) query.getQuantity(), 9);
         assertEquals((double) query.getPrice(), 10.5, 0.1);
 
-        treeDAO.deleteTreeByProductCode("EF002");
-        query = treeDAO.queryTreesByProductCode("EF002");
+        treeDAO.deleteByProductCode("EF002");
+        query = treeDAO.queryByProductCode("EF002");
         assertNull(query);
     }
 

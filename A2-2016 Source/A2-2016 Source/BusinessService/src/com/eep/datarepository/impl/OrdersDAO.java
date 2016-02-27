@@ -32,7 +32,7 @@ public class OrdersDAO implements IOrdersDAO {
         OrderDTO dto;
         try {
             Statement s = createStatement();
-            ResultSet rs = s.executeQuery("select * from " + Constants.ORDER_TABLE);
+            ResultSet rs = s.executeQuery("select * from " + Constants.TABLE_ORDER);
             while (rs.next()) {
                 dto = constructOrder(rs);
                 result.add(dto);
@@ -51,7 +51,7 @@ public class OrdersDAO implements IOrdersDAO {
         OrderDTO dto = null;
         try {
             Statement s = createStatement();
-            ResultSet rs = s.executeQuery("select * from " + Constants.ORDER_TABLE + " where order_id='" + orderID + "'");
+            ResultSet rs = s.executeQuery("select * from " + Constants.TABLE_ORDER + " where order_id='" + orderID + "'");
             if (rs.next()) {
                 dto = constructOrder(rs);
             }
@@ -105,7 +105,7 @@ public class OrdersDAO implements IOrdersDAO {
     @Override
     public void updateOrder(OrderDTO order) {
         try {
-            String sql = "UPDATE " + Constants.ORDER_TABLE
+            String sql = "UPDATE " + Constants.TABLE_ORDER
                     + " set order_date=?, first_name=?, last_name=?, address=?, phone=?, total_cost=?, shipped=?, ordertable=? "
                     + "where order_id=?";
             DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
@@ -143,7 +143,7 @@ public class OrdersDAO implements IOrdersDAO {
     }
 
     private String getConnString() {
-        return "jdbc:mysql://" + Constants.DB_IP + ":" + Constants.DB_PORT + "/" + Constants.ORDER_DATABASE;
+        return "jdbc:mysql://" + Constants.DB_IP + ":" + Constants.DB_PORT + "/" + Constants.DATABASE_ORDER;
     }
 
     private void closeConn() {

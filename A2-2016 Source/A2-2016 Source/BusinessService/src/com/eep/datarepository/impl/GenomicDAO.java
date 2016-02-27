@@ -5,27 +5,27 @@
  */
 package com.eep.datarepository.impl;
 
-import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.dto.GenomicDTO;
 import java.util.List;
-import com.eep.datarepository.ITreeDAO;
+import com.eep.datarepository.IGenomicDAO;
 
 /**
  *
  * @author zhongzhu
  */
-public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreeDAO {
+public class GenomicDAO extends AbstractInventoryItemDAO<GenomicDTO> implements IGenomicDAO {
 
-    public TreesDAO() {
-        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE);
+    public GenomicDAO() {
+        super(GenomicDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_GENOMIC);
     }
 
     @Override
-    public List<TreeDTO> queryAll() {
+    public List<GenomicDTO> queryAll() {
         return super.queryAll();
     }
 
     @Override
-    public TreeDTO queryByProductCode(String productCode) {
+    public GenomicDTO queryByProductCode(String productCode) {
         return super.queryByCode(productCode);
     }
 
@@ -35,13 +35,13 @@ public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITree
     }
 
     @Override
-    public void insert(TreeDTO tree) {
-        super.insert(tree);
+    public void insert(GenomicDTO s) {
+        super.insert(s);
     }
 
     @Override
-    public void update(TreeDTO tree) {
-        super.update(tree);
+    public void update(GenomicDTO s) {
+        super.update(s);
     }
 
 }

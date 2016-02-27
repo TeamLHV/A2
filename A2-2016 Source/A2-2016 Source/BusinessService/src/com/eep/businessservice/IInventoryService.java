@@ -5,10 +5,18 @@
  */
 package com.eep.businessservice;
 
+import com.eep.businessservice.dto.InventoryItemInfo;
+
 /**
  *
  * @author zhongzhu
  */
 public interface IInventoryService {
-    
+
+    void addTree(InventoryItemInfo info);
+
+    void addShrub(InventoryItemInfo info);
+
+    void addSeed(InventoryItemInfo info);
+
 }

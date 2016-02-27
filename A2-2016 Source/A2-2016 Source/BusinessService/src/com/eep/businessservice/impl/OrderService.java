@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.eep.datarepository.dto;
+package com.eep.businessservice.impl;
+
+import com.eep.businessservice.IOrderService;
 
 /**
  *
  * @author zhongzhu
  */
-public class ShrubsDTO extends InventoryItemDTO {
+public class OrderService implements IOrderService {
 
 }
