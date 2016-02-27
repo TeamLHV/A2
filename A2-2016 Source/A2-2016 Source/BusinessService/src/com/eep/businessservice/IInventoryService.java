@@ -20,6 +20,18 @@ public interface IInventoryService {
 
     void addSeed(InventoryItemInfo info);
 
+    void deleteTree(String productCode);
+
+    void deleteShrub(String productCode);
+
+    void deleteSeed(String productCode);
+
+    InventoryItemInfo decrementTree(String productCode);
+
+    InventoryItemInfo decrementShrub(String productCode);
+
+    InventoryItemInfo decrementSeed(String productCode);
+
     List<InventoryItemInfo> getAllTrees();
 
     List<InventoryItemInfo> getAllShrubs();

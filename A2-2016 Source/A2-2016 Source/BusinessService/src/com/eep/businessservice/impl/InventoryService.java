@@ -132,4 +132,43 @@ public class InventoryService implements IInventoryService {
         temp.setQuantity(t.getQuantity());
         return temp;
     }
+
+    @Override
+    public void deleteTree(String productCode) {
+        treeDAO.deleteByProductCode(productCode);
+    }
+
+    @Override
+    public void deleteShrub(String productCode) {
+        shrubDAO.deleteByProductCode(productCode);
+    }
+
+    @Override
+    public void deleteSeed(String productCode) {
+        seedDAO.deleteByProductCode(productCode);
+    }
+
+    @Override
+    public InventoryItemInfo decrementTree(String productCode) {
+        TreeDTO dto = treeDAO.queryByProductCode(productCode);
+        dto.setQuantity(dto.getQuantity() - 1);
+        treeDAO.update(dto);
+        return convertToInventoryItemInfo(treeDAO.queryByProductCode(productCode));
+    }
+
+    @Override
+    public InventoryItemInfo decrementShrub(String productCode) {
+        ShrubDTO dto = shrubDAO.queryByProductCode(productCode);
+        dto.setQuantity(dto.getQuantity() - 1);
+        shrubDAO.update(dto);
+        return convertToInventoryItemInfo(shrubDAO.queryByProductCode(productCode));
+    }
+
+    @Override
+    public InventoryItemInfo decrementSeed(String productCode) {
+        SeedDTO dto = seedDAO.queryByProductCode(productCode);
+        dto.setQuantity(dto.getQuantity() - 1);
+        seedDAO.update(dto);
+        return convertToInventoryItemInfo(seedDAO.queryByProductCode(productCode));
+    }
 }
