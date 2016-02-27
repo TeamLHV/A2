@@ -6,6 +6,7 @@
 package com.eep.datarepository;
 
 import com.eep.datarepository.dto.OrderDTO;
+import com.eep.datarepository.dto.OrderTableItemDTO;
 import java.util.List;
 
 /**
@@ -13,6 +14,12 @@ import java.util.List;
  * @author zhongzhu
  */
 public interface IOrdersDAO {
+
+    void createOrderTable(String orderTableName);
+
+    void dropOrderTable(String orderTableName);
+
+    void insertIntoOrderTable(String orderTableName, OrderTableItemDTO item);
 
     List<OrderDTO> queryAllOrders();
 

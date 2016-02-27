@@ -5,10 +5,17 @@
  */
 package com.eep.businessservice;
 
+import com.eep.businessservice.dto.InventoryItemInfo;
+import com.eep.businessservice.dto.OrderInfo;
+
 /**
  *
  * @author zhongzhu
  */
 public interface IOrderService {
-    
+
+    void createNewOrder(OrderInfo orderInfo);
+
+    void addItemToOrder(OrderInfo orderInfo, InventoryItemInfo item);
+
 }

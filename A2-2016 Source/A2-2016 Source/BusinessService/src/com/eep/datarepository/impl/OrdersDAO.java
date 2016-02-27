@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.eep.datarepository.IOrdersDAO;
+import com.eep.datarepository.dto.OrderTableItemDTO;
 import java.sql.PreparedStatement;
 
 /**
@@ -159,4 +160,46 @@ public class OrdersDAO implements IOrdersDAO {
         Statement s = DBConn.createStatement();
         return s;
     }
+
+    @Override
+    public void createOrderTable(String orderTableName) {
+        try {
+            String SQLstatement = ("CREATE TABLE " + orderTableName
+                    + "(item_id int unsigned not null auto_increment primary key, "
+                    + "product_id varchar(20), description varchar(80), "
+                    + "item_price float(7,2) );");
+            Statement s = createStatement();
+            s.executeUpdate(SQLstatement);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void insertIntoOrderTable(String orderTableName, OrderTableItemDTO item) {
+        try {
+            String SQLstatement = ("INSERT INTO " + orderTableName
+                    + " (product_id, description, item_price) "
+                    + "VALUES ( '" + item.getProductCode() + "', " + "'"
+                    + item.getDescription() + "', " + item.getPrice() + " );");
+            Statement s = createStatement();
+            s.executeUpdate(SQLstatement);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void dropOrderTable(String orderTableName) {
+        try {
+            String SQLstatement = "DROP TABLE " + orderTableName;
+            createStatement().executeUpdate(SQLstatement);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import com.eep.businessservice.impl.InventoryService;
 import com.eep.businessservice.impl.OrderService;
 import com.eep.datarepository.impl.CultureBoxDAO;
 import com.eep.datarepository.impl.GenomicDAO;
+import com.eep.datarepository.impl.OrdersDAO;
 import com.eep.datarepository.impl.ProcessingDAO;
 import com.eep.datarepository.impl.ReferenceMaterialDAO;
 import com.eep.datarepository.impl.SeedDAO;
@@ -30,6 +31,6 @@ public class ServiceFactory {
     }
 
     public static IOrderService createOrderService() {
-        return new OrderService();
+        return new OrderService(new OrdersDAO());
     }
 }
