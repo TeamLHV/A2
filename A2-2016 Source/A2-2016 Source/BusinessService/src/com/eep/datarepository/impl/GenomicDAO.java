@@ -13,10 +13,10 @@ import com.eep.datarepository.IGenomicDAO;
  *
  * @author zhongzhu
  */
-public class GenomicDAO extends AbstractInventoryItemDAO<GenomicDTO> implements IGenomicDAO {
+public class GenomicDAO extends AbstractLeafTechInventoryItemDAO<GenomicDTO> implements IGenomicDAO {
 
     public GenomicDAO() {
-        super(GenomicDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_GENOMIC);
+        super(GenomicDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_GENOMIC);
     }
 
     @Override

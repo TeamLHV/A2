@@ -13,10 +13,10 @@ import com.eep.datarepository.IProcessingDAO;
  *
  * @author zhongzhu
  */
-public class ProcessingDAO extends AbstractInventoryItemDAO<ProcessingDTO> implements IProcessingDAO {
+public class ProcessingDAO extends AbstractLeafTechInventoryItemDAO<ProcessingDTO> implements IProcessingDAO {
 
     public ProcessingDAO() {
-        super(ProcessingDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_PROCESSING);
+        super(ProcessingDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_PROCESSING);
     }
 
     @Override

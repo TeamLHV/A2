@@ -13,10 +13,10 @@ import com.eep.datarepository.dto.CultureBoxDTO;
  *
  * @author zhongzhu
  */
-public class CultureBoxDAO extends AbstractInventoryItemDAO<CultureBoxDTO> implements ICultureBoxDAO {
+public class CultureBoxDAO extends AbstractLeafTechInventoryItemDAO<CultureBoxDTO> implements ICultureBoxDAO {
 
     public CultureBoxDAO() {
-        super(CultureBoxDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_CULTUREBOX);
+        super(CultureBoxDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_CULTUREBOX);
     }
 
     @Override

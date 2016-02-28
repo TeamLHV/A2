@@ -13,10 +13,10 @@ import com.eep.datarepository.IReferenceMaterialDAO;
  *
  * @author zhongzhu
  */
-public class ReferenceMaterialDAO extends AbstractInventoryItemDAO<ReferenceMaterialDTO> implements IReferenceMaterialDAO {
+public class ReferenceMaterialDAO extends AbstractLeafTechInventoryItemDAO<ReferenceMaterialDTO> implements IReferenceMaterialDAO {
 
     public ReferenceMaterialDAO() {
-        super(ReferenceMaterialDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_REFERENCE_MATERIAL);
+        super(ReferenceMaterialDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_REFERENCE_MATERIAL);
     }
 
     @Override

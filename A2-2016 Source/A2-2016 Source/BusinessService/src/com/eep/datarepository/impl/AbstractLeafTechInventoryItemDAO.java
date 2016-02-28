@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * @author zhongzhu
  * @param <DTO> : can be TreeDTO, ShrubDTO, and etc.
  */
-public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
+public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItemDTO> {
 
     private Connection DBConn = null;
 
@@ -36,7 +36,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
      * @param database database name
      * @param table table name
      */
-    protected AbstractInventoryItemDAO(Class c, String database, String table) {
+    protected AbstractLeafTechInventoryItemDAO(Class c, String database, String table) {
         this.c = c;
         this.database = database;
         this.table = table;
@@ -54,7 +54,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
                 result.add(temp);
             }
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -66,13 +66,13 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         DTO dto = null;
         try {
             Statement s = createStatement();
-            ResultSet rs = s.executeQuery("select * from " + table + " where product_code='" + id + "'");
+            ResultSet rs = s.executeQuery("select * from " + table + " where productid='" + id + "'");
             if (rs.next()) {
                 dto = (DTO) c.newInstance();
                 constructInventoryItem(dto, rs);
             }
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -82,13 +82,13 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
     protected void insert(DTO dto) {
         try {
             Statement s = createStatement();
-            String sql = "INSERT INTO " + table + " (product_code, "
-                    + "description, quantity, price) VALUES ( '"
+            String sql = "INSERT INTO " + table + " (productid, "
+                    + "productdescription, productquantity, productprice) VALUES ( '"
                     + dto.getProductCode() + "', " + "'" + dto.getDescription() + "', "
                     + dto.getQuantity() + ", " + dto.getPrice() + ");";
             s.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -98,11 +98,11 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         try {
             Statement s = createStatement();
             System.out.println(productCode);
-            String sql = "DELETE FROM " + table + " WHERE product_code = '" + productCode + "';";
+            String sql = "DELETE FROM " + table + " WHERE productid = '" + productCode + "';";
             System.out.println(sql);
             s.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -110,7 +110,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
 
     protected void update(DTO dto) {
         try {
-            String sql = "UPDATE " + table + " set description=?, quantity=?, price=? where product_code=?";
+            String sql = "UPDATE " + table + " set productdescription=?, productquantity=?, productprice=? where productid=?";
             DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
             PreparedStatement s = DBConn.prepareStatement(sql);
             s.setString(1, dto.getDescription());
@@ -119,7 +119,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
             s.setString(4, dto.getProductCode());
             s.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeConn();
         }
@@ -133,7 +133,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         try {
             DBConn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractLeafTechInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
