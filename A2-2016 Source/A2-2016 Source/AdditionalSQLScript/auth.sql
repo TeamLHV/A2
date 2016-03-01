@@ -25,3 +25,8 @@ CREATE TABLE `sessions` (
   UNIQUE KEY `u_id_UNIQUE` (`u_id`),
   CONSTRAINT `SESSIONS_UID_USERS_UID` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `loginlog` (
+  `userid` int NOT NULL,
+  `time` timestamp
+);
