@@ -48,4 +48,26 @@ public final class dbUtil {
         return s;
     }
     
+    
+   public static void logLoginInfo(int username){
+        try{
+            Statement stmt = createStatement(Constants.DATABASE_AUTH);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String sqlQuery = "insert into " + Constants.TABLE_LOGGING + " values("+username+",'"+timestamp+"','Login')";
+            stmt.executeUpdate(sqlQuery);            
+        }catch(SQLException e){
+            Logger.getLogger(Thread.currentThread().getStackTrace()[1].getClassName()).log(Level.SEVERE, null, e);
+        }        
+    }
+    
+    public static void logLogoutInfo(int username){
+        try{
+            Statement stmt = createStatement(Constants.DATABASE_AUTH);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String sqlQuery = "insert into " + Constants.TABLE_LOGGING + " values("+username+",'"+timestamp+"','Logout')";
+            stmt.executeUpdate(sqlQuery);            
+        }catch(SQLException e){
+            Logger.getLogger(Thread.currentThread().getStackTrace()[1].getClassName()).log(Level.SEVERE, null, e);
+        }        
+    }
 }
