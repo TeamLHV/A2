@@ -7,8 +7,10 @@ package com.eep.businessservice.factory;
 
 import com.eep.businessservice.IInventoryService;
 import com.eep.businessservice.IOrderService;
+import com.eep.businessservice.IUserService;
 import com.eep.businessservice.impl.InventoryService;
 import com.eep.businessservice.impl.OrderService;
+import com.eep.businessservice.impl.UserService;
 import com.eep.datarepository.impl.CultureBoxDAO;
 import com.eep.datarepository.impl.GenomicDAO;
 import com.eep.datarepository.impl.OrdersDAO;
@@ -17,6 +19,7 @@ import com.eep.datarepository.impl.ReferenceMaterialDAO;
 import com.eep.datarepository.impl.SeedDAO;
 import com.eep.datarepository.impl.ShrubDAO;
 import com.eep.datarepository.impl.TreesDAO;
+import com.eep.datarepository.impl.UserDAO;
 
 /**
  *
@@ -32,5 +35,9 @@ public class ServiceFactory {
 
     public static IOrderService createOrderService() {
         return new OrderService(new OrdersDAO());
+    }
+    
+    public static IUserService createUserService() {
+        return new UserService(new UserDAO());
     }
 }

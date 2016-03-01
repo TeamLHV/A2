@@ -30,5 +30,9 @@ public class Constants {
     public static final String TABLE_GENOMIC = "genomics";
     public static final String TABLE_PROCESSING = "processing";
     public static final String TABLE_REFERENCE_MATERIAL = "referencematerials";
+    
+    public static final String DATABASE_AUTH = "auth";
+    public static final String TABLE_USERS = "users";
+    public static final String TABLE_SESSIONS = "sessions";
 
 }

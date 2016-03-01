@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.eep.datarepository.util.dbUtil;
 
 /**
  *
@@ -46,7 +47,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         List<DTO> result = new ArrayList<>();
         DTO temp;
         try {
-            Statement s = createStatement();
+            Statement s = dbUtil.createStatement(database);
             ResultSet rs = s.executeQuery("select * from " + table);
             while (rs.next()) {
                 temp = (DTO) c.newInstance();
@@ -56,7 +57,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConn();
+            dbUtil.closeConn(DBConn);
         }
 
         return result;
@@ -65,7 +66,7 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
     protected DTO queryByCode(String id) {
         DTO dto = null;
         try {
-            Statement s = createStatement();
+            Statement s = dbUtil.createStatement(database);
             ResultSet rs = s.executeQuery("select * from " + table + " where product_code='" + id + "'");
             if (rs.next()) {
                 dto = (DTO) c.newInstance();
@@ -74,14 +75,14 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConn();
+            dbUtil.closeConn(DBConn);
         }
         return dto;
     }
 
     protected void insert(DTO dto) {
         try {
-            Statement s = createStatement();
+            Statement s = dbUtil.createStatement(database);
             String sql = "INSERT INTO " + table + " (product_code, "
                     + "description, quantity, price) VALUES ( '"
                     + dto.getProductCode() + "', " + "'" + dto.getDescription() + "', "
@@ -90,13 +91,13 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConn();
+            dbUtil.closeConn(DBConn);
         }
     }
 
     protected void deleteByProductCode(String productCode) {
         try {
-            Statement s = createStatement();
+            Statement s = dbUtil.createStatement(database);
             System.out.println(productCode);
             String sql = "DELETE FROM " + table + " WHERE product_code = '" + productCode + "';";
             System.out.println(sql);
@@ -104,14 +105,14 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConn();
+            dbUtil.closeConn(DBConn);
         }
     }
 
     protected void update(DTO dto) {
         try {
             String sql = "UPDATE " + table + " set description=?, quantity=?, price=? where product_code=?";
-            DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
+            DBConn = DriverManager.getConnection(dbUtil.getConnString(database), Constants.USER_NAME, Constants.PASSWORD);
             PreparedStatement s = DBConn.prepareStatement(sql);
             s.setString(1, dto.getDescription());
             s.setInt(2, dto.getQuantity());
@@ -121,26 +122,8 @@ public abstract class AbstractInventoryItemDAO<DTO extends InventoryItemDTO> {
         } catch (SQLException ex) {
             Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            closeConn();
+            dbUtil.closeConn(DBConn);
         }
-    }
-
-    private String getConnString() {
-        return "jdbc:mysql://" + Constants.DB_IP + ":" + Constants.DB_PORT + "/" + database;
-    }
-
-    private void closeConn() {
-        try {
-            DBConn.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AbstractInventoryItemDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private Statement createStatement() throws SQLException {
-        DBConn = DriverManager.getConnection(getConnString(), Constants.USER_NAME, Constants.PASSWORD);
-        Statement s = DBConn.createStatement();
-        return s;
     }
 
     private void constructInventoryItem(InventoryItemDTO dto, ResultSet rs) throws SQLException {

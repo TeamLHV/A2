@@ -7,8 +7,10 @@ package com.eep.datarepository;
 
 import com.eep.datarepository.dto.OrderDTO;
 import com.eep.datarepository.dto.TreeDTO;
+import com.eep.datarepository.dto.UserDTO;
 import com.eep.datarepository.impl.OrdersDAO;
 import com.eep.datarepository.impl.TreesDAO;
+import com.eep.datarepository.impl.UserDAO;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -111,5 +113,28 @@ public class DataRepositoryTests {
         ordersDAO.deleteOrderByID(newOrder.getOrderID());
         query = ordersDAO.queryOrderByOrderID(newOrder.getOrderID());
         assertNull(query);
+    }
+    
+    @Test
+    public void testUsers(){
+        UserDAO ud = new UserDAO();
+        UserDTO ut = new UserDTO();
+        ut.setDepartment("CMU");
+        ut.setFirstname("Tang");
+        ut.setLastname("Lekhaka");
+        ut.setPassword("d");
+        ut.setUsername("plekhaka");
+        ud.insert(ut);
+        
+        UserDTO result = ud.queryByUsername("plekhaka");
+        assertEquals(result.getDepartment(), ut.getDepartment());
+        assertEquals(result.getFirstname(), ut.getFirstname());
+        assertEquals(result.getLastname(), ut.getLastname());
+        assertEquals(result.getU_id(), ut.getU_id());
+        assertEquals(result.getPassword(), ut.getPassword());
+        
+        ud.deleteByUsername(result.getUsername());
+        ut = ud.queryByUsername(result.getUsername());
+        assertNull(ut);
     }
 }
