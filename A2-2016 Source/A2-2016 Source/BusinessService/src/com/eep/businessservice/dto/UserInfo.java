@@ -18,7 +18,7 @@ public class UserInfo extends UserDTO {
     
     public UserInfo(String username, String password, String firstname, String lastname, String department){
         this.setUsername(username);
-        this.setPassword(password);
+        this.setPassword(password, true);
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setDepartment(department);

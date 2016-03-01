@@ -122,7 +122,7 @@ public class DataRepositoryTests {
         ut.setDepartment("CMU");
         ut.setFirstname("Tang");
         ut.setLastname("Lekhaka");
-        ut.setPassword("d");
+        ut.setPassword("d", true);
         ut.setUsername("plekhaka");
         ud.insert(ut);
         
@@ -130,7 +130,6 @@ public class DataRepositoryTests {
         assertEquals(result.getDepartment(), ut.getDepartment());
         assertEquals(result.getFirstname(), ut.getFirstname());
         assertEquals(result.getLastname(), ut.getLastname());
-        assertEquals(result.getU_id(), ut.getU_id());
         assertEquals(result.getPassword(), ut.getPassword());
         
         ud.deleteByUsername(result.getUsername());

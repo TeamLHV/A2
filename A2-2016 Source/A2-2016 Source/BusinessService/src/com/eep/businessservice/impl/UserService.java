@@ -24,8 +24,9 @@ public class UserService implements IUserService{
 
     @Override
     public UserInfo authenticate(String username, String password) {
-        UserInfo ud = Authentication.authenticate(username, password);
-        return ud;
+        Authentication auth = new Authentication();
+        UserInfo ui = auth.authenticate(username, password);
+        return ui;
     }
 
     @Override
@@ -35,9 +36,9 @@ public class UserService implements IUserService{
         ui.setFirstname(firstname);
         ui.setLastname(lastname);
         ui.setUsername(username);
-        ui.setPassword(password);
+        ui.setPassword(password, true);
         
-        if (userDAO.insert(ui) == 1){
+        if (userDAO.insert(ui) != -1){
             return ui;
         } else {
             return null;

@@ -31,7 +31,7 @@ public class UserDAO implements IUserDAO{
     private final String table;
     
     public UserDAO(){
-        this.c = UserDAO.class;
+        this.c = UserDTO.class;
         this.database = Constants.DATABASE_AUTH;
         this.table = Constants.TABLE_USERS;
     }
@@ -47,9 +47,11 @@ public class UserDAO implements IUserDAO{
             }
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } finally {
             dbUtil.closeConn(DBConn);
         }
+        
         return userDTO;
     }
     
@@ -57,7 +59,7 @@ public class UserDAO implements IUserDAO{
         UserDTO userDTO = null;
         try {
             Statement s = dbUtil.createStatement(database);
-            ResultSet rs = s.executeQuery("select * from " + table + " username='" + username + "' and users.password ='" + password + "';");
+            ResultSet rs = s.executeQuery("select * from " + table + " where username='" + username + "' and password ='" + password + "';");
             if (rs.next()) {
                 userDTO = (UserDTO) c.newInstance();
                 constructUser(userDTO, rs);
@@ -93,7 +95,7 @@ public class UserDAO implements IUserDAO{
         dto.setDepartment(rs.getString("department"));
         dto.setFirstname(rs.getString("firstname"));
         dto.setLastname(rs.getString("lastname"));
-        dto.setPassword(rs.getString("password"));
+        dto.setPassword(rs.getString("password"), false);
     }
 
     @Override
@@ -127,9 +129,9 @@ public class UserDAO implements IUserDAO{
             return s.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
         } finally {
             dbUtil.closeConn(DBConn);
-            return -1;
         }
     }
 
@@ -148,9 +150,9 @@ public class UserDAO implements IUserDAO{
             return s.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
         } finally {
             dbUtil.closeConn(DBConn);
-            return -1;
         }
     }
 

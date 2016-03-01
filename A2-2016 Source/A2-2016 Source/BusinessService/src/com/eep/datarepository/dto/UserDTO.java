@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.eep.datarepository.dto;
-import com.eep.businessservice.security.Authentication;
+import com.eep.datarepository.util.securityUtil;
 /**
  *
  * @author Tang
@@ -61,7 +61,16 @@ public class UserDTO {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = Authentication.MD5Encryption(password);
+    /**
+     *
+     * @param password
+     * @param encrypted
+     */
+    public void setPassword(String password, Boolean encrypted) {
+        if (encrypted){
+            this.password = securityUtil.MD5Encryption(password);
+        } else {
+            this.password = password;
+        }
     }
 }
