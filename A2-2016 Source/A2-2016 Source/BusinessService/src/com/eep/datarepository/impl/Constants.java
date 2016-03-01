@@ -34,5 +34,6 @@ public class Constants {
     public static final String DATABASE_AUTH = "auth";
     public static final String TABLE_USERS = "users";
     public static final String TABLE_SESSIONS = "sessions";
+    public static final String TABLE_LOGGING = "loginlog";
 
 }
