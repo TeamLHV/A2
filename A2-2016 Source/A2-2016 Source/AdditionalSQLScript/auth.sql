@@ -27,7 +27,7 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `loginlog` (
-  `userid` int NOT NULL,
+  `username` varchar(45) NOT NULL,
   `time` timestamp NOT NULL,
   `activity` varchar(6) NOT NULL
 );
