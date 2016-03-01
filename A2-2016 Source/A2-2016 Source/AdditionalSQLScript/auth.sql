@@ -28,5 +28,6 @@ CREATE TABLE `sessions` (
 
 CREATE TABLE `loginlog` (
   `userid` int NOT NULL,
-  `time` timestamp
+  `time` timestamp NOT NULL,
+  `activity` varchar(6) NOT NULL
 );
