@@ -30,18 +30,17 @@ public class UserService implements IUserService{
 
     @Override
     public UserInfo createUser(String username, String password, String firstname, String lastname, String department) {
-        UserDTO ud = new UserDTO();
-        ud.setDepartment(department);
-        ud.setFirstname(firstname);
-        ud.setLastname(lastname);
-        ud.setUsername(username);
-        ud.setPassword(password);
+        UserInfo ui = new UserInfo();
+        ui.setDepartment(department);
+        ui.setFirstname(firstname);
+        ui.setLastname(lastname);
+        ui.setUsername(username);
+        ui.setPassword(password);
         
-        if (userDAO.insert(ud) == 1){
-            return new UserInfo();
+        if (userDAO.insert(ui) == 1){
+            return ui;
         } else {
             return null;
-            
         }
     }
 
