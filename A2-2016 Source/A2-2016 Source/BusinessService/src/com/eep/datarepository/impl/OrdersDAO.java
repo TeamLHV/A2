@@ -6,6 +6,7 @@
 package com.eep.datarepository.impl;
 
 import com.eep.businessservice.dto.UserInfo;
+import com.eep.businessservice.security.Authentication;
 import com.eep.datarepository.dto.OrderDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,6 +29,7 @@ public class OrdersDAO implements IOrdersDAO {
 
     private Connection DBConn = null;
     private UserInfo userInfo = new UserInfo();
+    private Authentication auth = new Authentication();
     
     public OrdersDAO(UserInfo userInfo){
         this.userInfo = userInfo;
@@ -35,6 +37,10 @@ public class OrdersDAO implements IOrdersDAO {
 
     @Override
     public List<OrderDTO> queryAllOrders() {
+        if (!auth.checkSession(userInfo)){
+            return null;
+        }
+        
         List<OrderDTO> result = new ArrayList<>();
         OrderDTO dto;
         try {
