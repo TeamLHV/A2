@@ -78,7 +78,7 @@ public final class dbUtil {
     public static Timestamp generateTimeStamp(){
         try{
             Date d = new Date(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dstring = sdf.format(d);
             Date updatedDate = sdf.parse(dstring);
             Timestamp timestamp = new Timestamp(updatedDate.getTime());
