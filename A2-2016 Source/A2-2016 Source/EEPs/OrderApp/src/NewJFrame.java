@@ -945,7 +945,7 @@ public class NewJFrame extends javax.swing.JFrame {
         // If we are connected, then we get the list of reference materials from the
         // inventory database
         try {
-            results = inventoryService.getAllProcessing();
+            results = inventoryService.getAllReferenceMaterial();
             //Display the data in the textarea
 
             jTextArea1.setText("");
