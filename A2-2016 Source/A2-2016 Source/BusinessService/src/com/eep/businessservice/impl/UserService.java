@@ -64,5 +64,6 @@ public class UserService implements IUserService{
         SessionDTO sessionDTO = new SessionDTO();
         sessionDTO.setU_id(userInfo.getU_id());
         sessionDAO.delete(sessionDTO);
+        dbUtil.logLogoutInfo(userInfo.getUsername());
     }
 }
