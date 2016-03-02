@@ -15,4 +15,5 @@ public interface IUserService {
     UserInfo createUser(String username, String password, String firstname, String lastname, String department);
     int checkUsernameAvailable(String username);
     UserInfo authenticate(String username, String password);
+    void logOut(UserInfo userInfo);
 }

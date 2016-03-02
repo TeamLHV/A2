@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.GenomicDTO;
 import java.util.List;
 import com.eep.datarepository.IGenomicDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.IGenomicDAO;
  */
 public class GenomicDAO extends AbstractLeafTechInventoryItemDAO<GenomicDTO> implements IGenomicDAO {
 
-    public GenomicDAO() {
-        super(GenomicDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_GENOMIC);
+    public GenomicDAO(UserInfo userInfo) {
+        super(GenomicDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_GENOMIC, userInfo);
     }
 
     @Override

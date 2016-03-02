@@ -6,15 +6,24 @@
 package com.eep.datarepository.dto;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 /**
  *
  * @author Tang
  */
 public class SessionDTO {
     private Integer s_id;
-    private Integer upid;
+    private String upid;
     private Integer u_id;
-    private Time timestamp;
+    private Timestamp timestamp;
+
+    public String getUpid() {
+        return upid;
+    }
+
+    public void setUpid(String upid) {
+        this.upid = upid;
+    }
 
     public Integer getS_id() {
         return s_id;
@@ -22,14 +31,6 @@ public class SessionDTO {
 
     public void setS_id(Integer s_id) {
         this.s_id = s_id;
-    }
-
-    public Integer getUpid() {
-        return upid;
-    }
-
-    public void setUpid(Integer upid) {
-        this.upid = upid;
     }
 
     public Integer getU_id() {
@@ -40,11 +41,11 @@ public class SessionDTO {
         this.u_id = u_id;
     }
 
-    public Time getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Time timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
 }

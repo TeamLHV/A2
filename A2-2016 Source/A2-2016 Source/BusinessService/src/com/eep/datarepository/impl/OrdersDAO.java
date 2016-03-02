@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.OrderDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,11 @@ import java.sql.PreparedStatement;
 public class OrdersDAO implements IOrdersDAO {
 
     private Connection DBConn = null;
+    private UserInfo userInfo = new UserInfo();
+    
+    public OrdersDAO(UserInfo userInfo){
+        this.userInfo = userInfo;
+    }
 
     @Override
     public List<OrderDTO> queryAllOrders() {

@@ -5,6 +5,8 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
+import com.eep.businessservice.security.Authentication;
 import com.eep.datarepository.dto.InventoryItemDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,20 +32,27 @@ public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItem
     private final Class c;
     private final String database;
     private final String table;
-
+    private final UserInfo userInfo;
+    private final Authentication auth;
     /**
      *
      * @param c type of DTO
      * @param database database name
      * @param table table name
      */
-    protected AbstractLeafTechInventoryItemDAO(Class c, String database, String table) {
+    protected AbstractLeafTechInventoryItemDAO(Class c, String database, String table, UserInfo userInfo) {
         this.c = c;
         this.database = database;
         this.table = table;
+        this.userInfo = userInfo;
+        auth = new Authentication();
     }
 
     protected List<DTO> queryAll() {
+        if (!auth.checkSession(userInfo)){
+            return null;
+        }
+        
         List<DTO> result = new ArrayList<>();
         DTO temp;
         try {
@@ -64,6 +73,10 @@ public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItem
     }
 
     protected DTO queryByCode(String id) {
+        if (!auth.checkSession(userInfo)){
+            return null;
+        }
+        
         DTO dto = null;
         try {
             Statement s = dbUtil.createStatement(database);
@@ -81,6 +94,10 @@ public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItem
     }
 
     protected void insert(DTO dto) {
+        if (!auth.checkSession(userInfo)){
+            return;
+        }
+        
         try {
             Statement s = dbUtil.createStatement(database);
             String sql = "INSERT INTO " + table + " (productid, "
@@ -96,6 +113,10 @@ public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItem
     }
 
     protected void deleteByProductCode(String productCode) {
+        if (!auth.checkSession(userInfo)){
+            return;
+        }
+        
         try {
             Statement s = dbUtil.createStatement(database);
             System.out.println(productCode);
@@ -110,6 +131,10 @@ public abstract class AbstractLeafTechInventoryItemDAO<DTO extends InventoryItem
     }
 
     protected void update(DTO dto) {
+        if (!auth.checkSession(userInfo)){
+            return;
+        }
+        
         try {
             String sql = "UPDATE " + table + " set productdescription=?, productquantity=?, productprice=? where productid=?";
             DBConn = DriverManager.getConnection(dbUtil.getConnString(database), Constants.USER_NAME, Constants.PASSWORD);

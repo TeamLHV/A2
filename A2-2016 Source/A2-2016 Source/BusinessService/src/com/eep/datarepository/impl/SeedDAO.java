@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.SeedDTO;
 import java.util.List;
 import com.eep.datarepository.ISeedDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.ISeedDAO;
  */
 public class SeedDAO extends AbstractInventoryItemDAO<SeedDTO> implements ISeedDAO {
 
-    public SeedDAO() {
-        super(SeedDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SEED);
+    public SeedDAO(UserInfo userInfo) {
+        super(SeedDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SEED, userInfo);
     }
 
     @Override

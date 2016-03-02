@@ -15,6 +15,8 @@ import java.util.List;
 public interface ISessionDAO {
     List<SessionDTO> queryAll();
 
+    SessionDTO queryByUID(Integer u_id);
+    
     int insert(SessionDTO session);
 
     int update(SessionDTO session);

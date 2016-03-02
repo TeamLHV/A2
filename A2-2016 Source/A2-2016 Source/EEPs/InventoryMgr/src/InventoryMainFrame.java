@@ -1,6 +1,8 @@
 
 import com.eep.businessservice.IInventoryService;
+import com.eep.businessservice.IUserService;
 import com.eep.businessservice.dto.OrderItemInfo;
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.businessservice.factory.ServiceFactory;
 import com.eep.configuration.DBServer;
 import java.util.List;
@@ -29,13 +31,23 @@ import java.util.List;
 public class InventoryMainFrame extends javax.swing.JFrame {
 
     String versionID = "v2.10.10";
-    private IInventoryService service = ServiceFactory.createInventoryService();
-
+    private IInventoryService service;
+    private IUserService userService;
+    private UserInfo userInfo;
     /**
      * Creates new form AddInventoryMainFrame
      */
-    public InventoryMainFrame() {
+    public InventoryMainFrame(UserInfo userInfo) {
         initComponents();
+        
+        if (userInfo == null) {
+            dispose();
+            new LoginInventoryApp().setVisible(true);
+        }
+        
+        this.userInfo = userInfo;
+        service = ServiceFactory.createInventoryService(userInfo);
+        userService = ServiceFactory.createUserService(userInfo);
         jLabel1.setText("Inventory Management Application " + versionID);
     }
 
@@ -76,6 +88,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
         jRadioButton7 = new javax.swing.JRadioButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,6 +171,13 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton7);
         jRadioButton7.setText("Reference Material");
 
+        btnLogout.setLabel("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,6 +235,8 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                                                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jRadioButton7)
+                                                .addGap(171, 171, 171)
+                                                .addComponent(btnLogout)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,7 +260,7 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -279,7 +301,9 @@ public class InventoryMainFrame extends javax.swing.JFrame {
                             .addComponent(jRadioButton6)))
                     .addComponent(jRadioButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton7)
+                    .addComponent(btnLogout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -770,18 +794,26 @@ public class InventoryMainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        userService.logOut(userInfo);
+        dispose();
+        new LoginInventoryApp().setVisible(true);
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InventoryMainFrame().setVisible(true);
+                //new InventoryMainFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogout;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

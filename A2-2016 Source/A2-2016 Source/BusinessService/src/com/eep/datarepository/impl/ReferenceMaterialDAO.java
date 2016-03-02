@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.ReferenceMaterialDTO;
 import java.util.List;
 import com.eep.datarepository.IReferenceMaterialDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.IReferenceMaterialDAO;
  */
 public class ReferenceMaterialDAO extends AbstractLeafTechInventoryItemDAO<ReferenceMaterialDTO> implements IReferenceMaterialDAO {
 
-    public ReferenceMaterialDAO() {
-        super(ReferenceMaterialDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_REFERENCE_MATERIAL);
+    public ReferenceMaterialDAO(UserInfo userInfo) {
+        super(ReferenceMaterialDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_REFERENCE_MATERIAL, userInfo);
     }
 
     @Override

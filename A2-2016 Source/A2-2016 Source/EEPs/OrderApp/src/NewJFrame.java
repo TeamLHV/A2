@@ -1,8 +1,10 @@
 
 import com.eep.businessservice.IInventoryService;
 import com.eep.businessservice.IOrderService;
+import com.eep.businessservice.IUserService;
 import com.eep.businessservice.dto.OrderItemInfo;
 import com.eep.businessservice.dto.OrderInfo;
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.businessservice.exception.CreateTableException;
 import com.eep.businessservice.exception.DropTableException;
 import com.eep.businessservice.factory.ServiceFactory;
@@ -27,14 +29,25 @@ import java.util.List;
 public class NewJFrame extends javax.swing.JFrame {
 
     String versionID = "v2.10.10";
-    private IOrderService orderService = ServiceFactory.createOrderService();
-    private IInventoryService inventoryService = ServiceFactory.createInventoryService();
-
+    private IOrderService orderService;
+    private IInventoryService inventoryService;
+    private IUserService userService;
+    private UserInfo userInfo;
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public NewJFrame(UserInfo userInfo) {
         initComponents();
+        
+        if (userInfo == null) {
+            dispose();
+            new LoginOrderApp().setVisible(true);
+        }
+        
+        this.userInfo = userInfo;
+        orderService = ServiceFactory.createOrderService(userInfo);
+        inventoryService = ServiceFactory.createInventoryService(userInfo);
+        userService = ServiceFactory.createUserService(userInfo);
         jLabel1.setText("Order Management Application " + versionID);
     }
 
@@ -82,6 +95,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -212,6 +226,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setText("LOGOUT");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,6 +256,12 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(jTextField5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel10))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -273,13 +300,8 @@ public class NewJFrame extends javax.swing.JFrame {
                                         .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextField6))
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel10))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnLogout))))))
                 .addGap(93, 93, 93))
             .addGroup(layout.createSequentialGroup()
                 .addGap(300, 300, 300)
@@ -337,7 +359,9 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(btnLogout))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -942,18 +966,26 @@ public class NewJFrame extends javax.swing.JFrame {
         } // end try-catch
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        userService.logOut(userInfo);
+        dispose();
+        new LoginOrderApp().setVisible(true);
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                //new NewJFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -20,7 +20,7 @@ import java.util.Arrays;
  */
 public class LoginInventoryApp extends javax.swing.JFrame implements ActionListener {
     
-    private IUserService userService = ServiceFactory.createUserService();
+    private IUserService userService = ServiceFactory.createUserService(null);
     
     /**
      * Creates new form LoginFrame
@@ -144,7 +144,7 @@ public class LoginInventoryApp extends javax.swing.JFrame implements ActionListe
         }
         
         dispose();
-        new InventoryMainFrame().setVisible(true);
+        new InventoryMainFrame(ui).setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.ShrubDTO;
 import java.util.List;
 import com.eep.datarepository.IShrubDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.IShrubDAO;
  */
 public class ShrubDAO extends AbstractInventoryItemDAO<ShrubDTO> implements IShrubDAO {
 
-    public ShrubDAO() {
-        super(ShrubDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SHRUB);
+    public ShrubDAO(UserInfo userInfo) {
+        super(ShrubDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_SHRUB, userInfo);
     }
 
     @Override

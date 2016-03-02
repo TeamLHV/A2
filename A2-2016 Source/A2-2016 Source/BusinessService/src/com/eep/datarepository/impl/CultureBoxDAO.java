@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.ICultureBoxDAO;
 import java.util.List;
 import com.eep.datarepository.dto.CultureBoxDTO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.dto.CultureBoxDTO;
  */
 public class CultureBoxDAO extends AbstractLeafTechInventoryItemDAO<CultureBoxDTO> implements ICultureBoxDAO {
 
-    public CultureBoxDAO() {
-        super(CultureBoxDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_CULTUREBOX);
+    public CultureBoxDAO(UserInfo userInfo) {
+        super(CultureBoxDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_CULTUREBOX, userInfo);
     }
 
     @Override

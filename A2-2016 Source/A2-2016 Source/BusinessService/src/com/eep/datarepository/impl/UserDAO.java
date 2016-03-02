@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.eep.datarepository.impl;
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.IUserDAO;
 import com.eep.datarepository.dto.UserDTO;
 import com.eep.datarepository.util.dbUtil;
@@ -29,11 +30,13 @@ public class UserDAO implements IUserDAO{
     private final Class c;
     private final String database;
     private final String table;
+    private final UserInfo userInfo;
     
-    public UserDAO(){
+    public UserDAO(UserInfo userInfo){
         this.c = UserDTO.class;
         this.database = Constants.DATABASE_AUTH;
         this.table = Constants.TABLE_USERS;
+        this.userInfo = userInfo;
     }
     
     public UserDTO queryByUsername(String username) {
@@ -175,6 +178,27 @@ public class UserDAO implements IUserDAO{
             dbUtil.closeConn(DBConn);
             return -1;
         }
+    }
+    
+    public UserDTO queryUserByUsername(String username){
+        List<UserDTO> result = new ArrayList<>();
+        UserDTO temp;
+        try {
+            Statement s = dbUtil.createStatement(database);
+            ResultSet rs = s.executeQuery("select * from " + table + " where username = '" + username + "';");
+            while (rs.next()) {
+                temp = (UserDTO) c.newInstance();
+                constructUser(temp, rs);
+                return temp;
+            }
+        } catch (SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            dbUtil.closeConn(DBConn);
+        }
+
+        return null;
     }
     
 }

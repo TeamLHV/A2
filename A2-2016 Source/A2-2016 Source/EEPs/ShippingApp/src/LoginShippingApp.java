@@ -20,7 +20,7 @@ import java.util.Arrays;
  */
 public class LoginShippingApp extends javax.swing.JFrame implements ActionListener {
     
-    private IUserService userService = ServiceFactory.createUserService();
+    private IUserService userService = ServiceFactory.createUserService(null);
     
     /**
      * Creates new form LoginFrame
@@ -144,7 +144,7 @@ public class LoginShippingApp extends javax.swing.JFrame implements ActionListen
         }
         
         dispose();
-        new NewJFrame().setVisible(true);
+        new NewJFrame(ui).setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

@@ -8,6 +8,7 @@ package com.eep.businessservice.factory;
 import com.eep.businessservice.IInventoryService;
 import com.eep.businessservice.IOrderService;
 import com.eep.businessservice.IUserService;
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.businessservice.impl.InventoryService;
 import com.eep.businessservice.impl.OrderService;
 import com.eep.businessservice.impl.UserService;
@@ -27,17 +28,17 @@ import com.eep.datarepository.impl.UserDAO;
  */
 public class ServiceFactory {
 
-    public static IInventoryService createInventoryService() {
-        return new InventoryService(new TreesDAO(), new ShrubDAO(), new SeedDAO(),
-                new CultureBoxDAO(), new GenomicDAO(), new ProcessingDAO(),
-                new ReferenceMaterialDAO());
+    public static IInventoryService createInventoryService(UserInfo userInfo) {
+        return new InventoryService(new TreesDAO(userInfo), new ShrubDAO(userInfo), new SeedDAO(userInfo),
+                new CultureBoxDAO(userInfo), new GenomicDAO(userInfo), new ProcessingDAO(userInfo),
+                new ReferenceMaterialDAO(userInfo));
     }
 
-    public static IOrderService createOrderService() {
-        return new OrderService(new OrdersDAO());
+    public static IOrderService createOrderService(UserInfo userInfo) {
+        return new OrderService(new OrdersDAO(userInfo));
     }
     
-    public static IUserService createUserService() {
-        return new UserService(new UserDAO());
+    public static IUserService createUserService(UserInfo userInfo) {
+        return new UserService(new UserDAO(userInfo));
     }
 }

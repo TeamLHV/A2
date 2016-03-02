@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.ProcessingDTO;
 import java.util.List;
 import com.eep.datarepository.IProcessingDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.IProcessingDAO;
  */
 public class ProcessingDAO extends AbstractLeafTechInventoryItemDAO<ProcessingDTO> implements IProcessingDAO {
 
-    public ProcessingDAO() {
-        super(ProcessingDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_PROCESSING);
+    public ProcessingDAO(UserInfo userInfo) {
+        super(ProcessingDTO.class, Constants.DATABASE_LEAFTECH, Constants.TABLE_PROCESSING, userInfo);
     }
 
     @Override

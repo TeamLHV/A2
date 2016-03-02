@@ -5,12 +5,14 @@
  */
 package com.eep.datarepository;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.OrderDTO;
 import com.eep.datarepository.dto.TreeDTO;
 import com.eep.datarepository.dto.UserDTO;
 import com.eep.datarepository.impl.OrdersDAO;
 import com.eep.datarepository.impl.TreesDAO;
 import com.eep.datarepository.impl.UserDAO;
+import com.eep.datarepository.util.dbUtil;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -24,7 +26,10 @@ import org.junit.Test;
  * @author zhongzhu
  */
 public class DataRepositoryTests {
-
+    
+    private UserInfo admin;
+    private String adminSession = "adminsessionmock";
+    
     public DataRepositoryTests() {
     }
 
@@ -38,6 +43,13 @@ public class DataRepositoryTests {
 
     @Before
     public void setUp() {
+        this.admin = new UserInfo();
+        
+        UserDAO adminDAO = new UserDAO(admin);
+        UserDTO adminDTO = adminDAO.queryByUsername("admin");
+        
+        this.admin.setU_id(adminDTO.getU_id());
+        this.admin.setSession(adminSession, dbUtil.generateTimeStamp());
     }
 
     @After
@@ -46,7 +58,8 @@ public class DataRepositoryTests {
 
     @Test
     public void testTreeQuery() {
-        final TreesDAO treeDAO = new TreesDAO();
+        
+        final TreesDAO treeDAO = new TreesDAO(admin);
 
         TreeDTO dto = new TreeDTO();
         dto.setProductCode("EF002");
@@ -76,7 +89,7 @@ public class DataRepositoryTests {
 
     @Test
     public void testOrders() {
-        OrdersDAO ordersDAO = new OrdersDAO();
+        OrdersDAO ordersDAO = new OrdersDAO(admin);
         OrderDTO newOrder = new OrderDTO();
         newOrder.setOrderDate("02/26/2016 5:5:45");
         newOrder.setFirstName("Zhong");
@@ -117,7 +130,7 @@ public class DataRepositoryTests {
     
     @Test
     public void testUsers(){
-        UserDAO ud = new UserDAO();
+        UserDAO ud = new UserDAO(admin);
         UserDTO ut = new UserDTO();
         ut.setDepartment("CMU");
         ut.setFirstname("Tang");

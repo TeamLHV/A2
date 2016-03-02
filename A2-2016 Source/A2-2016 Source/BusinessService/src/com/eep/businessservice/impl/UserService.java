@@ -10,7 +10,10 @@ import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.IUserDAO;
 import com.eep.datarepository.impl.UserDAO;
 import com.eep.businessservice.security.Authentication;
+import com.eep.datarepository.dto.SessionDTO;
 import com.eep.datarepository.dto.UserDTO;
+import com.eep.datarepository.impl.SessionDAO;
+import com.eep.datarepository.util.dbUtil;
 /**
  *
  * @author Tang
@@ -26,7 +29,12 @@ public class UserService implements IUserService{
     public UserInfo authenticate(String username, String password) {
         Authentication auth = new Authentication();
         UserInfo ui = auth.authenticate(username, password);
-        return ui;
+        if (ui != null){
+            dbUtil.logLoginInfo(ui.getUsername());
+            return ui;
+        }
+        
+        return null;
     }
 
     @Override
@@ -48,5 +56,13 @@ public class UserService implements IUserService{
     @Override
     public int checkUsernameAvailable(String username) {
         return userDAO.checkUsernameAvailable(username);
+    }
+
+    @Override
+    public void logOut(UserInfo userInfo) {
+        SessionDAO sessionDAO = new SessionDAO(userInfo);
+        SessionDTO sessionDTO = new SessionDTO();
+        sessionDTO.setU_id(userInfo.getU_id());
+        sessionDAO.delete(sessionDTO);
     }
 }

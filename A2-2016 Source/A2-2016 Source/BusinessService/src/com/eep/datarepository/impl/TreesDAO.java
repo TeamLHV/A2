@@ -5,6 +5,7 @@
  */
 package com.eep.datarepository.impl;
 
+import com.eep.businessservice.dto.UserInfo;
 import com.eep.datarepository.dto.TreeDTO;
 import java.util.List;
 import com.eep.datarepository.ITreeDAO;
@@ -15,8 +16,8 @@ import com.eep.datarepository.ITreeDAO;
  */
 public class TreesDAO extends AbstractInventoryItemDAO<TreeDTO> implements ITreeDAO {
 
-    public TreesDAO() {
-        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE);
+    public TreesDAO(UserInfo userInfo) {
+        super(TreeDTO.class, Constants.DATABASE_INVENTORY, Constants.TABLE_TREE, userInfo);
     }
 
     @Override
